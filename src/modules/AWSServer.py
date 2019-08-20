@@ -5,16 +5,14 @@ import argparse
 import json
 
 class MQTTServer:
-    def __init__(self, host, cert_path, client_id, endpoint_port=8883, connect_delay=1, backoff_time=32,
+    def __init__(self, host, rootca_path, privkey_path, cert_path, client_id, endpoint_port=8883, connect_delay=1, backoff_time=32,
                  stable_time=20,offline_publish=-1, draining_freq=2, con_discon_timeout=10, operation_timeout=5):
 
         # Init AWSIoTMQTTClient
         self.myAWSIoTMQTTClient = None
         self.myAWSIoTMQTTClient = AWSIoTMQTTClient(client_id)
         self.myAWSIoTMQTTClient.configureEndpoint(host, 8883)
-        self.myAWSIoTMQTTClient.configureCredentials("{}aws-root-cert.pem".format(cert_path),
-                                                     "{}private-key.pem.key".format(cert_path),
-                                                     "{}iot-cert.pem.crt".format(cert_path))
+        self.myAWSIoTMQTTClient.configureCredentials(rootca_path, privkey_path, cert_path)
                                                      
         # AWSIoTMQTTClient connection configuration
         self.myAWSIoTMQTTClient.configureAutoReconnectBackoffTime(connect_delay, backoff_time, stable_time)
