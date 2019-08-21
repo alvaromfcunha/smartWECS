@@ -3,9 +3,8 @@ import json
 import os
 
 def main():
-    print (os.getcwd())
-    server = MQTTServer("a2cr09xzlv9lkb-ats.iot.us-east-2.amazonaws.com", "src/resources/root-CA.crt",
-                         "src/resources/eee132ef2d-private.pem.key", "src/resources/eee132ef2d-certificate.pem.crt", "smartWECS_RBPi")
+    server = MQTTServer("a2cr09xzlv9lkb-ats.iot.us-east-2.amazonaws.com", "resources/root-CA.crt",
+                         "resources/654373ba50-private.pem.key", "resources/654373ba50-certificate.pem.crt", "smartwecs_thing")
     server.connect()
     json0 = json.loads('{ "state" : "boa" }')
     server.publish(json0, "state")
