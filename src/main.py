@@ -10,17 +10,18 @@ def main():
     server.connect() 
 
     while(1):
-        serial.write('e')
+        serial.rese
+        serial.write('e'.encode())
         time.sleep(.1)
         eletricity = serial.read()
 
-        serial.write('w')
+        serial.write('w'.encode())
         time.sleep(.1)
         water = serial.read()
 
         data = {
-            "eletricity" : eletricity,
-            "water" : water
+            "eletricity" : int(eletricity),
+            "water" : int(water)
         }
 
         server.publish(data, "data")

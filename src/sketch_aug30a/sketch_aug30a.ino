@@ -11,14 +11,16 @@ void loop()
   
   switch(Serial.read()){
     case 'e':
+      delay(10);
       itoa(analogRead(A3),buffer,10);
       Serial.write(buffer);
-      Serial.write("\n\r");
+      Serial.write("\n");
       break;
     case 'w':
+      delay(10);
       itoa(analogRead(A4),buffer,10);
       Serial.write(buffer);
-      Serial.write("\n\r");
+      Serial.write("\n");
       break;
   }
 }
