@@ -10,7 +10,6 @@ def main():
     server.connect() 
 
     while(1):
-        serial.rese
         serial.write('e'.encode())
         time.sleep(.1)
         eletricity = serial.read()
