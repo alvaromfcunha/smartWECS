@@ -11,12 +11,14 @@ def main():
 
     while(1):
         serial.write('e'.encode())
-        time.sleep(.1)
         eletricity = serial.read()
 
+        print("ELE:", eletricity)
+
         serial.write('w'.encode())
-        time.sleep(.1)
         water = serial.read()
+
+        print("WAT:", water)
 
         data = {
             "eletricity" : int(eletricity),

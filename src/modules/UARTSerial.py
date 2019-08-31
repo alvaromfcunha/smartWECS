@@ -6,7 +6,7 @@ class Serial:
         self.ser.reset_input_buffer()
     def read(self):
         self.ser.reset_input_buffer()
-        return self.ser.read_until()
+        return self.ser.readline()
     def write(self, string):
         self.ser.reset_input_buffer()
         return self.ser.write(string)
