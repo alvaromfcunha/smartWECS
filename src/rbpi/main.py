@@ -18,6 +18,9 @@ def main():
         serial.write('w'.encode())
         water = serial.read()
 
+        if (water == b''):
+            water = b'0'
+
         print("WAT:", water)
 
         data = {
