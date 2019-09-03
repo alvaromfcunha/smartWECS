@@ -18,7 +18,7 @@ void loop()
       break;
     case 'w':
       delay(10);
-      itoa(pulseIn(A4, LOW),buffer,10);
+      itoa(analogRead(A4),buffer,10);
       Serial.write(buffer);
       Serial.write("\n");
       break;

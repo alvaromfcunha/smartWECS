@@ -21,7 +21,7 @@ def main():
         print("WAT:", water)
 
         data = {
-            "eletricity" : int(eletricity),
+            "electricity" : int(eletricity),
             "water" : int(water)
         }
 
