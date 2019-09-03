@@ -18,7 +18,7 @@ def main():
         serial.write('w'.encode())
         water = serial.read()
 
-        if (water == b''):
+        if (water == b'' or water < 0):
             water = b'0'
 
         if (eletricity == b''):
