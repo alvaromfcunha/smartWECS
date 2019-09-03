@@ -4,7 +4,7 @@ from modules.UARTSerial import Serial
    
 def main():
 
-    serial = Serial("/dev/ttyS0", 9600)
+    serial = Serial("/dev/ttyS0", 9600, 5)
     server = MQTTServer("a2cr09xzlv9lkb-ats.iot.us-west-2.amazonaws.com", "resources/root-CA.crt",
                          "resources/cert.key", "resources/cert.crt", "")
     server.connect() 
@@ -20,6 +20,9 @@ def main():
 
         if (water == b''):
             water = b'0'
+
+        if (eletricity == b''):
+            eletricity = b'0'
 
         print("WAT:", water)
 
