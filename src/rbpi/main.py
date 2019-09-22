@@ -31,7 +31,7 @@ def main():
         if (currentAdc == b''):
             currentAdc = b'0'
         print("ELE:", currentAdc)
-        
+
         serial.write('w'.encode())
         waterPeriod = serial.read()
         if (waterPeriod == b'' or int(waterPeriod) < 0):
@@ -47,9 +47,12 @@ def sendData():
     global water
         
     if currentAdc is not None and waterPeriod is not None:
-        current = (30*currentAdc) / 1023
+        current = (30*int(currentAdc)) / 1023
         electricity += 127*current
-        water += 7.5 / waterPeriod
+        try:
+            water += 7.5 / int(waterPeriod)
+        except Exception as e:
+            print ("ERROR:",e)
         data = {
             "electricity" : int(electricity),
             "water" : int(water)
