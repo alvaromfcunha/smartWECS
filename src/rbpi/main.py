@@ -7,7 +7,6 @@ from modules.UARTSerial import Serial
 
 currentAdc = None
 waterPeriod = None
-
 electricity = 0
 water = 0
 
@@ -27,21 +26,16 @@ def main():
     tl.start(block=False)
 
     while(1):
-        
         serial.write('e'.encode())
         currentAdc = serial.read()
-
-        print("ELE:", currentAdc)
-
-        serial.write('w'.encode())
-        waterPeriod = serial.read()
-    
-        if (waterPeriod == b'' or int(waterPeriod) < 0):
-            waterPeriod = b'0'
-
         if (currentAdc == b''):
             currentAdc = b'0'
-
+        print("ELE:", currentAdc)
+        
+        serial.write('w'.encode())
+        waterPeriod = serial.read()
+        if (waterPeriod == b'' or int(waterPeriod) < 0):
+            waterPeriod = b'0'
         print("WAT:", waterPeriod)
 
 @tl.job(interval=timedelta(seconds=1))
