@@ -5,6 +5,8 @@ from datetime import timedelta
 from modules.AWSServer import MQTTServer
 from modules.UARTSerial import Serial
 
+multiplier = 10
+
 currentAdc = None
 waterPeriod = None
 electricity = 0
@@ -47,15 +49,71 @@ def sendData():
     global water
         
     if currentAdc is not None and waterPeriod is not None:
-        current = (30*int(currentAdc)) / 1023
-        electricity += 127*current
-        try:
-            water += 7.5 / int(waterPeriod)
-        except Exception as e:
-            print ("ERROR:",e)
+
+        current = (30 * int(currentAdc)) / 1023 # A
+        electricity += ((127 * current)* 3.6) / 1000 # kW/h
+
+        electricityMoney = electricity * 0.92189069
+
+        if waterPeriod != 0:
+            waterFlow = (7.5 / int(waterPeriod)) * 3.6 # m3/s
+        else:
+            waterFlow = 0
+        
+        water += waterFlow
+
+        waterMoney = 15.29 + 14.14
+        waterTmp = water
+        if water <= 5:
+            waterMoney += (waterTmp * 0.96) + (waterTmp * 0.89)
+        elif water <=10:
+            waterMoney += (waterTmp * 0.96) + (waterTmp * 0.89)
+            waterTmp -= 5
+            waterMoney += (waterTmp * 3.089) + (waterTmp * 2.857)
+        elif water <= 15:
+            waterMoney += (waterTmp * 0.96) + (waterTmp * 0.89)
+            waterTmp -= 5
+            waterMoney += (waterTmp * 3.089) + (waterTmp * 2.857)
+            waterTmp -= 5
+            waterMoney += (waterTmp * 6.407) + (waterTmp * 5.926)
+        elif water <=20:
+            waterMoney += (waterTmp * 0.96) + (waterTmp * 0.89)
+            waterTmp -= 5
+            waterMoney += (waterTmp * 3.089) + (waterTmp * 2.857)
+            waterTmp -= 5
+            waterMoney += (waterTmp * 6.407) + (waterTmp * 5.926)
+            waterTmp -= 5
+            waterMoney += (waterTmp * 7.637) + (waterTmp * 7.064)
+        elif water <=40:
+            waterMoney += (waterTmp * 0.96) + (waterTmp * 0.89)
+            waterTmp -= 5
+            waterMoney += (waterTmp * 3.089) + (waterTmp * 2.857)
+            waterTmp -= 5
+            waterMoney += (waterTmp * 6.407) + (waterTmp * 5.926)
+            waterTmp -= 5
+            waterMoney += (waterTmp * 7.637) + (waterTmp * 7.064)
+            waterTmp -= 5
+            waterMoney += (waterTmp * 8.326) + (waterTmp * 7.702)
+        else:
+            waterMoney += (waterTmp * 0.96) + (waterTmp * 0.89)
+            waterTmp -= 5
+            waterMoney += (waterTmp * 3.089) + (waterTmp * 2.857)
+            waterTmp -= 5
+            waterMoney += (waterTmp * 6.407) + (waterTmp * 5.926)
+            waterTmp -= 5
+            waterMoney += (waterTmp * 7.637) + (waterTmp * 7.064)
+            waterTmp -= 5
+            waterMoney += (waterTmp * 8.326) + (waterTmp * 7.702)
+            waterTmp -= 20
+            waterMoney += (waterTmp * 13.662) + (waterTmp * 12.637)
+
         data = {
             "electricity" : int(electricity),
-            "water" : int(water)
+            "water" : int(water),
+            "money" :{
+                "electricity" : electricityMoney,
+                "water" : waterMoney
+            }
         }
         server.publish(data, "data")
         print('running')
