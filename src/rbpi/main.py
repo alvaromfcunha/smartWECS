@@ -50,13 +50,16 @@ def sendData():
         
     if currentAdc is not None and waterPeriod is not None:
 
-        current = (30 * int(currentAdc)) / 1023 # A
+        waterPeriod = int(waterPeriod)
+        currentAdc = int(currentAdc)
+
+        current = (30 * currentAdc) / 1023 # A
         electricity += ((127 * current)* 3.6) / 1000 # kW/h
 
         electricityMoney = electricity * 0.92189069
 
         if waterPeriod != 0:
-            waterFlow = (7.5 / int(waterPeriod)) * 3.6 # m3/s
+            waterFlow = (7.5 / waterPeriod) * 3.6 # m3/s
         else:
             waterFlow = 0
         
