@@ -61,7 +61,7 @@ def sendData():
         if waterPeriod != 0:
             waterFlow = (7.5 / waterPeriod) * 3.6 # m3/s
         else:
-            waterFlow = 0
+            waterFlow = 0   
         
         water += waterFlow * multiplier
 
@@ -111,8 +111,8 @@ def sendData():
             waterMoney += (waterTmp * 13.662) + (waterTmp * 12.637)
 
         data = {
-            "electricity" : int(electricity),
-            "water" : int(water),
+            "electricity" : electricity,
+            "water" : water,
             "money" :{
                 "electricity" : electricityMoney,
                 "water" : waterMoney
