@@ -5,7 +5,7 @@ from datetime import timedelta
 from modules.AWSServer import MQTTServer
 from modules.UARTSerial import Serial
 
-multiplier = 10
+multiplier = 1
 
 currentAdc = None
 waterPeriod = None
@@ -54,7 +54,7 @@ def sendData():
         currentAdc = int(currentAdc)
 
         current = (30 * currentAdc) / 1023 # A
-        electricity += ((127 * current)* 3.6) / 1000 # kW/h
+        electricity += ((127 * current)/ 3600000) * multiplier # kW*h
 
         electricityMoney = electricity * 0.92189069
 
@@ -63,7 +63,7 @@ def sendData():
         else:
             waterFlow = 0
         
-        water += waterFlow
+        water += waterFlow * multiplier
 
         waterMoney = 15.29 + 14.14
         waterTmp = water
