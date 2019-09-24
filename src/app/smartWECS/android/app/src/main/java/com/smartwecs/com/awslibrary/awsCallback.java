@@ -1,4 +1,13 @@
 package com.smartwecs.com.awslibrary;
 
-public class awsCallback {
+/**
+ * Callback async operations.
+ * @param <R>
+ */
+public interface awsCallback<R> {
+
+    void onResult(R result);
+
+    void onError(Exception e);
 }
+
