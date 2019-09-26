@@ -118,7 +118,10 @@ def sendData():
                 "water" : waterMoney
             }
         }
-        server.publish(data, "data")
+        try:
+            server.publish(data, "data")
+        except Exception as e:
+            print("NET COCO", e)
         print('running')
 
 if __name__ == "__main__":
