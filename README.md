@@ -1,2 +1,2 @@
 # smartWECS
-Smart Water and Eletric Consumption System
+### Smart Water and Electric Consumption measuring System
